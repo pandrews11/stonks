@@ -1,0 +1,7 @@
+<h3>Stocks!</h3>
+
+Upload Stocks
+<%= form_with url: upload_stocks_path, multipart: true do |form| %>
+  <%= file_field_tag :data_file %>
+  <%= form.submit 'Save' %>
+<% end %>

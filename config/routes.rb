@@ -7,4 +7,13 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  root "dashboard#show"
+
+  resource :dashboard, only: :show
+  resources :stocks do
+    collection do
+      post 'upload'
+    end
+  end
 end

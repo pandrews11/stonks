@@ -1,0 +1,42 @@
+version: '3.9'
+volumes:
+  stonks-db:
+  stonks-redis:
+services:
+  db:
+    image: postgres:latest
+    # Named volume to persist database data outside of container.
+    # Format is "named_volume:path/in/container"
+    volumes:
+      - stonks-db:/var/lib/postgresql/data
+
+      # Host mount for one-time initialization.
+      # Format is "./path/on/host:/path/in/container"
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    env_file:
+      - .env
+  redis:
+    image: redis:latest
+    volumes:
+      - stonks-redis:/var/lib/redis/data
+  app:
+    build:
+      context: .
+    volumes:
+      - .:/stonks
+    ports:
+      - '3000:3000'
+    links:
+      - db
+      - redis
+    env_file:
+      - .env
+  sidekiq:
+    build:
+      context: .
+    command: bundle exec sidekiq
+    links:
+      - db
+      - redis
+    env_file:
+      - .env
