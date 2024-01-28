@@ -1,0 +1,1 @@
+-- Add initialization for postgresql

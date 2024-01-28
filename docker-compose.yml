@@ -2,6 +2,7 @@ version: '3.9'
 volumes:
   stonks-db:
   stonks-redis:
+  stonks-storage:
 services:
   db:
     image: postgres:latest
@@ -24,6 +25,7 @@ services:
       context: .
     volumes:
       - .:/stonks
+      - stonks-storage:/media/storage/stonks
     ports:
       - '3000:3000'
     links:
@@ -34,6 +36,9 @@ services:
   sidekiq:
     build:
       context: .
+    volumes:
+      - .:/stonks
+      - stonks-storage:/media/storage/stonks
     command: bundle exec sidekiq
     links:
       - db
