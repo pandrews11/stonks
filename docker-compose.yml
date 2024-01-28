@@ -21,8 +21,8 @@ services:
     volumes:
       - stonks-redis:/var/lib/redis/data
   app:
-    build:
-      context: .
+    build: .
+    tty: true
     volumes:
       - .:/stonks
       - stonks-storage:/media/storage/stonks

@@ -9,9 +9,14 @@ RUN apt-get update -qq && \
     git \
     libvips \
     pkg-config \
-    nodejs \
     postgresql-client \
     libpq-dev
+
+RUN curl -sL https://deb.nodesource.com/setup_21.x -o /tmp/nodesource_setup.sh
+RUN bash /tmp/nodesource_setup.sh
+
+RUN apt-get install nodejs
+RUN corepack enable
 
 RUN mkdir /stonks
 WORKDIR /stonks
@@ -29,4 +34,4 @@ RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000
 
-CMD ["./bin/rails", "server", "--port", "3000", "--binding", "0.0.0.0"]
+CMD ["foreman", "start", "-f", "Procfile.dev"]

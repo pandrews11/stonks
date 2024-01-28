@@ -12,6 +12,20 @@
   </head>
 
   <body>
-    <%= yield %>
+    <nav class="container">
+      <ul>
+        <li><a href="">Dashboard</a></li>
+      </ul>
+      <ul>
+        <li><a href="">About</a></li>
+        <li><a href="" class="contrast"><%= image_tag 'github-svgrepo-com'%></a></li>
+      </ul>
+    </nav>
+    <main class="container">
+      <%= yield %>
+    </main>
+    <footer class="container">
+      <hr>
+    </footer>
   </body>
 </html>
