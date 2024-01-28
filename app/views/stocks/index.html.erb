@@ -1,34 +1,20 @@
-<h3>Stocks!</h3>
-
 <table>
   <thead>
     <tr>
-      <th>Ticker</th>
-      <th>Name</th>
-      <th>Exchange</th>
-      <th>Country</th>
+      <th>Symbol</th>
+      <th>Description</th>
+      <th>Currency</th>
+      <th>Type</th>
     </tr>
   </thead>
   <tbody>
     <% @stocks.each do |stock| %>
       <tr>
-        <td><%= link_to stock.ticker, stock_path(stock) %></td>
-        <td><%= stock.name %></td>
-        <td><%= stock.exchange %></td>
-        <td><%= stock.country %></td>
+        <td><%= link_to stock.symbol, stock_path(stock) %></td>
+        <td><%= stock.description %></td>
+        <td><%= stock.currency %></td>
+        <td><%= stock.security_type %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-
-
-Upload Stocks
-<%= form_with url: upload_stocks_path, multipart: true do |form| %>
-  <%= file_field_tag :data_file %>
-  <%= form.submit 'Save' %>
-<% end %>
-
-
-Stock Uploads Count:
-<%= @stock_data_uploads.count %>

@@ -1,19 +1,29 @@
-require 'csv'
-
 class IngestStockDataJob < ApplicationJob
   queue_as :default
 
-  def perform(stock_data_upload_id)
-    stock_data_upload = StockDataUpload.find(stock_data_upload_id)
+  def perform
+    # Array of 'FinnhubRuby::StockSymbol's
+    # could 429 rate limiting
+    finnhub_stocks = finnhub_client.stock_symbols('US')
 
-    # Wipe all current stock data, we are starting fresh.
     Stock.delete_all
+    Stock.insert_all!(sanitize_stocks(finnhub_stocks))
+  end
 
-    csv_filepath = ActiveStorage::Blob.service.path_for(stock_data_upload.csv.key)
+  private
 
-    # Insert new stock data.
-    CSV.foreach(csv_filepath, headers: true) do |row|
-      Stock.create!(ticker: row[0], name: row[1], exchange: row[2], country: row[4])
-    end
+  def finnhub_client
+    @finnhub_client ||= FinnhubRuby::DefaultApi.new
+  end
+
+  def sanitize_stocks(finnhub_stocks)
+    finnhub_stocks.map { |finnhub_stock|
+      {
+        currency: finnhub_stock.currency,
+        description: finnhub_stock.description,
+        symbol: finnhub_stock.display_symbol,
+        security_type: finnhub_stock.type
+      }
+    }
   end
 end

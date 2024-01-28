@@ -1,11 +1,12 @@
 class CreateStocks < ActiveRecord::Migration[7.1]
   def change
     create_table :stocks do |t|
-      t.string :name, null: false
-      t.string :ticker, null: false
-      t.index :ticker, unique: true
-      t.string :exchange
-      t.string :country
+      t.string :currency
+      t.string :description
+      t.string :symbol
+      t.string :security_type
+
+      t.index :symbol, unique: true
 
       t.timestamps
     end

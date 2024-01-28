@@ -14,9 +14,12 @@
   <body>
     <nav class="container">
       <ul>
-        <li><a href="">Dashboard</a></li>
+        <li><%= link_to 'Dashboard', root_path %></li>
+        <li><%= link_to 'Stocks', stocks_path %></li>
+        <li><%= link_to 'Search', stocks_path %></li>
       </ul>
       <ul>
+        <li><a href="">Settings</a></li>
         <li><a href="">About</a></li>
         <li><a href="" class="contrast"><%= image_tag 'github-svgrepo-com'%></a></li>
       </ul>

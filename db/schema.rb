@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_27_194014) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_27_193718) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,19 +42,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_27_194014) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "stock_data_uploads", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "stocks", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "ticker", null: false
-    t.string "exchange"
-    t.string "country"
+    t.string "currency"
+    t.string "description"
+    t.string "symbol"
+    t.string "security_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["ticker"], name: "index_stocks_on_ticker", unique: true
+    t.index ["symbol"], name: "index_stocks_on_symbol", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
