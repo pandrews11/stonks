@@ -1,7 +1,60 @@
-<h3><%= @stock.description %> (<%= @stock.symbol %>)</h3>
+<hgroup>
+  <h3><%= @stock.symbol %></h3>
+  <p><%= @stock.description %></h3>
+</hgroup>
 
-<%= @quote %>
+<article>
+  <header>Quote</header>
+  <table>
+    <thead>
+      <tr>
+        <th><a href="" class="primary">Current Price</a></th>
+        <th><a href="" class="primary">Change</a></th>
+        <th><a href="" class="primary">Percent Change</a></th>
+        <th><a href="" class="primary">High</a></th>
+        <th><a href="" class="primary">Low</a></th>
+        <th><a href="" class="primary">Open</a></th>
+        <th><a href="" class="primary">Previous Close</a></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= @quote.c %></td>
+        <td><%= @quote.d %></td>
+        <td><%= @quote.dp %></td>
+        <td><%= @quote.h %></td>
+        <td><%= @quote.l %></td>
+        <td><%= @quote.o %></td>
+        <td><%= @quote.pc %></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
 
-<div>
-  <%= link_to 'Back', stocks_path %>
-</div>
+<% if @recommendation_trend.present? %>
+  <article>
+    <header>Recomendation Trends</header>
+    <table>
+      <thead>
+        <tr>
+          <th><a href="" class="primary">Buy</a></th>
+          <th><a href="" class="primary">Hold</a></th>
+          <th><a href="" class="primary">Period</a></th>
+          <th><a href="" class="primary">Sell</a></th>
+          <th><a href="" class="primary">Strong Buy</a></th>
+          <th><a href="" class="primary">Stong Sell</a></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= @recommendation_trend.buy %></td>
+          <td><%= @recommendation_trend.hold %></td>
+          <td><%= @recommendation_trend.period %></td>
+          <td><%= @recommendation_trend.sell %></td>
+          <td><%= @recommendation_trend.strong_buy %></td>
+          <td><%= @recommendation_trend.strong_sell %></td>
+        </tr>
+      </tbody>
+    </table>
+  </article>
+<% end %>

@@ -1,4 +1,9 @@
-<table>
+<%= form_with url: stocks_path, class: 'grid', method: 'get' do |form| %>
+  <%= form.text_field :q, value: @q, placeholder: "Enter a stock ticker" %>
+  <%= form.submit 'Search' %>
+<% end %>
+
+<table role="grid">
   <thead>
     <tr>
       <th>Symbol</th>

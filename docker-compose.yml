@@ -31,6 +31,7 @@ services:
     links:
       - db
       - redis
+      - elasticsearch
     env_file:
       - .env
   sidekiq:
@@ -43,5 +44,14 @@ services:
     links:
       - db
       - redis
+      - elasticsearch
     env_file:
       - .env
+  elasticsearch:
+    image: elasticsearch:7.17.17
+    ports:
+      - '9200:9200'
+    environment:
+      - discovery.type=single-node
+      - cluster.name=elasticsearch-rails
+      - cluster.routing.allocation.disk.threshold_enabled=false
