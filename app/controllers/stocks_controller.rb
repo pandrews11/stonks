@@ -17,14 +17,20 @@ class StocksController < ApplicationController
 
   def show
     @stock = Stock.find(params[:id])
-    @quote = finnhub_client.quote(@stock.symbol)
-    @recommendation_trend = finnhub_client.recommendation_trends(@stock.symbol).first
+    @quote = finnhub_proxy.quote(@stock.symbol)
+    @recommendation_trends = finnhub_proxy.recommendation_trends(@stock.symbol)
+    @company_news = finnhub_proxy.company_news(@stock.symbol, 7.days.ago.strftime('%Y-%m-%d'), Time.now.strftime('%Y-%m-%d'))
+
+    respond_to do |format|
+      format.html
+      format.json { render json: {stock: @stock, quote: @quote, recommendation_trends: @recommendation_trends}.to_json, status: :ok}
+    end
   end
 
   private
 
-  def finnhub_client
-    @finnhub_client ||= FinnhubRuby::DefaultApi.new
+  def finnhub_proxy
+    @finnhub_proxy ||= FinnhubProxy.new
   end
 
   def stock_not_found

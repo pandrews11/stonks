@@ -4,3 +4,7 @@
 :root {
   --block-spacing-vertical: calc(var(--spacing));
 }
+
+h1 {
+  --typography-spacing-vertical: 1rem;
+}
