@@ -16,7 +16,9 @@ class FinnhubProxy
   def company_news(symbol, start_date, end_date)
     cache_key = "#{symbol}/company_news/#{start_date}/#{end_date}"
     Rails.cache.fetch(cache_key, expires_in: 1.day) do
-      finnhub_client.company_news(symbol, start_date, end_date)
+      finnhub_client
+        .company_news(symbol, start_date, end_date)
+        .select { |news| news&.summary.present? }
     end
   end
 

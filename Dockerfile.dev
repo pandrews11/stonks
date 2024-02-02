@@ -4,13 +4,7 @@ FROM ruby:3.2.3
 
 # Install packages needed to build gems
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y \
-    build-essential \
-    git \
-    libvips \
-    pkg-config \
-    postgresql-client \
-    libpq-dev
+    apt-get install -y build-essential libvips postgresql-client libpq-dev
 
 RUN curl -sL https://deb.nodesource.com/setup_21.x -o /tmp/nodesource_setup.sh
 RUN bash /tmp/nodesource_setup.sh
@@ -21,10 +15,14 @@ RUN corepack enable
 RUN mkdir /stonks
 WORKDIR /stonks
 
-RUN gem install bundler
+RUN gem install bundler -v 2.5.5
 
-COPY Gemfile* ./
+COPY Gemfile Gemfile.lock ./
 RUN bundle install --jobs 20 --retry 5
+
+COPY package.json *yarn* ./
+RUN yarn set version 4.1.0
+RUN yarn install
 
 # Install app
 COPY . .

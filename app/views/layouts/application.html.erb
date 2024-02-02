@@ -7,8 +7,8 @@
     <%= csp_meta_tag %>
 
     <%= favicon_link_tag "favicon.ico" %>
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+    <%= stylesheet_link_tag "application" %>
+    <%= javascript_include_tag "application", type: "module" %>
   </head>
 
   <body>
@@ -19,7 +19,11 @@
       <ul>
         <li><%= link_to 'Stocks', stocks_path, class: 'secondary' %></li>
         <li><%= link_to 'Settings', edit_settings_path, class: 'secondary' %></li>
-        <li><a href="" class="contrast"><%= image_tag 'github-svgrepo-com'%></a></li>
+        <li>
+          <a href="https://github.com/pandrews11/stonks" class="contrast">
+            <%= image_tag 'github-svgrepo-com'%>
+          </a>
+        </li>
       </ul>
     </nav>
     <hr>

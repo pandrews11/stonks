@@ -3,6 +3,8 @@ volumes:
   stonks-db:
   stonks-redis:
   stonks-storage:
+  stonks-search:
+  stonks-node_modules:
 services:
   db:
     image: postgres:latest
@@ -21,11 +23,14 @@ services:
     volumes:
       - stonks-redis:/var/lib/redis/data
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
     tty: true
     volumes:
       - .:/stonks
       - stonks-storage:/media/storage/stonks
+      - stonks-node_modules:/stonks/node_modules
     ports:
       - '3000:3000'
     links:
@@ -37,6 +42,7 @@ services:
   sidekiq:
     build:
       context: .
+      dockerfile: Dockerfile.dev
     volumes:
       - .:/stonks
       - stonks-storage:/media/storage/stonks
@@ -51,6 +57,8 @@ services:
     image: elasticsearch:7.17.17
     ports:
       - '9200:9200'
+    volumes:
+      - stonks-search:/usr/share/elasticsearch/data
     environment:
       - discovery.type=single-node
       - cluster.name=elasticsearch-rails
