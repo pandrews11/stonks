@@ -12,7 +12,6 @@ RUN bash /tmp/nodesource_setup.sh
 RUN apt-get install nodejs
 RUN corepack enable
 
-RUN mkdir /stonks
 WORKDIR /stonks
 
 RUN gem install bundler -v 2.5.5

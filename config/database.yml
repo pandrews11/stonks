@@ -1,8 +1,8 @@
 default: &default
   host: db
   adapter: postgresql
-  username: stonks_db
-  password: stonks_db
+  username: <%= Rails.application.credentials.db_username %>
+  password: <%= Rails.application.credentials.db_password %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
   min_messages: WARNING
@@ -21,4 +21,3 @@ test:
 production:
   <<: *default
   database: stonks-production
-  password: <%= Rails.application.credentials.db_password %>

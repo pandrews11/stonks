@@ -48,3 +48,7 @@
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+/config/credentials/development.key
+
+/config/credentials/test.key
